@@ -22,6 +22,7 @@ public class PageController {
         return pageRepository.save(page);
     }
 
+
     @GetMapping
     public List<Page> getAllPages() {
         return (List<Page>) pageRepository.findAll();
@@ -44,6 +45,7 @@ public class PageController {
             return ResponseEntity.ok(updatedPage);
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePage(@PathVariable(value = "id") Long pageId) {
         return pageRepository.findById(pageId).map(page -> {

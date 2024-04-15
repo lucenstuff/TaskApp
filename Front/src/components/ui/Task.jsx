@@ -1,19 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { EllipsisVertical } from "lucide-react";
 import PrioritySelector from "./PrioritySelector";
-import TaskService from "../../services/TaskService";
 
-function Task({ taskId, taskName, isDone }) {
-  const [completed, setCompleted] = useState(isDone);
+function Task({ taskName }) {
+  const [completed, setCompleted] = useState(false);
 
-  const toggleCompleted = async (taskId) => {
-    try {
-      const newCompletedStatus = !completed;
-      await TaskService.updateDoneTask(taskId, newCompletedStatus);
-      setCompleted((prevCompleted) => !prevCompleted);
-    } catch (error) {
-      console.log(error);
-    }
+  const toggleCompleted = () => {
+    setCompleted(!completed);
   };
 
   return (
@@ -23,7 +16,7 @@ function Task({ taskId, taskName, isDone }) {
           <input
             type="checkbox"
             checked={completed}
-            onChange={() => toggleCompleted(taskId)}
+            onChange={toggleCompleted}
             className="form-checkbox h-4 w-4 text-neutral-200"
           />
           <div className={completed ? "line-through" : ""}>{taskName}</div>

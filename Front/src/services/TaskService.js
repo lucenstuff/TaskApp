@@ -14,6 +14,23 @@ class TaskService {
       console.log(error);
     }
   }
+
+  updateDoneTask(taskId, newCompletedStatus) {
+    try {
+      return this.api
+        .put(`/tasks/${taskId}`, { completed: newCompletedStatus })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((error) => {
+          console.error("Error updating task:", error);
+          throw error;
+        });
+    } catch (error) {
+      console.error("Error updating task:", error);
+      throw error;
+    }
+  }
 }
 
 export default new TaskService();

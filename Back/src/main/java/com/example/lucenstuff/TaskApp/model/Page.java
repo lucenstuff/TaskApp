@@ -13,12 +13,16 @@ public class Page {
     private String name;
     private int progress;
 
+    private String color;
+
     @OneToMany(mappedBy = "page", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("page")
     private List<Task> tasks;
 
     public Page() {
     }
+
+
 
     public Page(Long id, String name, int progress) {
         this.id = id;
@@ -61,4 +65,11 @@ public class Page {
     public void removeTask(Task task) {
         tasks.remove(task);
     }
+    public String getColor() {
+        return color;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
+
 }

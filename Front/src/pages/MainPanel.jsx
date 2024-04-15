@@ -1,8 +1,9 @@
 import { CirclePlus, Ellipsis } from "lucide-react";
 import ProgressBar from "../components/ui/ProgressBar";
-import SubTask from "../components/ui/SubTask";
 import PageService from "../services/PageService";
 import { useState, useEffect } from "react";
+import Task from "../components/ui/Task";
+import PageHader from "../components/ui/PageHeader";
 
 function MainPanel() {
   const [selectedPage, setSelectedPage] = useState(null);
@@ -21,11 +22,7 @@ function MainPanel() {
 
   return (
     <div className="w-full h-screen text-neutral-200">
-      <div className="w-full bg-indigo-400 h-20 flex items-center px-10 justify-between gap-4">
-        <span className="text-2xl">{selectedPage?.name}</span>
-        <Ellipsis />
-      </div>
-
+      <PageHader name={selectedPage?.name} />
       <div className="w-full h-5/6 flex flex-col  bg-neutral-900 gap-4 pt-4 px-10">
         <div className="flex justify-center flex-col gap-2">
           <span>Progreso:{selectedPage?.progress}%</span>
@@ -40,10 +37,13 @@ function MainPanel() {
           </div>
         </div>
         {selectedPage?.tasks.map((subtask) => (
-          <SubTask key={subtask.id} taskName={subtask.name} />
+          <Task
+            key={subtask.id}
+            taskId={subtask.id}
+            taskName={subtask.name}
+            isDone={subtask.isDone}
+          />
         ))}
-        {/* <SubTask taskName="🗣 Hablar con Juan Perez" />
-        <SubTask taskName="📙 Corregir el proyecto" /> */}
       </div>
     </div>
   );
