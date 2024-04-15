@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example.lucenstuff</groupId>
-	<artifactId>TasksAPI</artifactId>
+	<artifactId>TaskApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>TasksAPI</name>
-	<description>Task List API </description>
+	<name>TaskApp</name>
+	<description>TaskApp Backend</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
@@ -25,6 +25,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>

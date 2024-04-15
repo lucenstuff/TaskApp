@@ -1,10 +1,10 @@
-package com.example.lucenstuff.TasksAPI;
+package com.example.lucenstuff.TaskApp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TasksApiApplicationTests {
+class TaskAppApplicationTests {
 
 	@Test
 	void contextLoads() {

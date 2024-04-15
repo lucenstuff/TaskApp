@@ -1,36 +1,26 @@
-import { Sun, Plus } from "lucide-react";
-import SearchBar from "./ui/SearchBar";
+import { CirclePlus, Ellipsis } from "lucide-react";
 import ProgressBar from "./ui/ProgressBar";
 import SubTask from "./ui/SubTask";
 
 function MainPanel() {
   return (
     <div className="w-full h-screen text-neutral-200">
-      <div className="w-full bg-neutral-500 h-1/6 py-10 px-10 flex flex-col gap-4">
-        <div className="flex items-center gap-2">
-          <span className="text-4xl">🤝 Reunión de equipo</span>
-        </div>
-        <span className="text-xl">Domingo 21 de Octubre</span>
+      <div className="w-full bg-indigo-400 h-20 flex items-center px-10 justify-between gap-4">
+        <span className="text-2xl">🤝 Reunión de equipo</span>
+        <Ellipsis />
       </div>
-      <div className="w-full h-5/6 flex flex-col gap-4 pt-4 px-4">
-        <div className="flex justify-center">
-          <SearchBar />
-        </div>
+      <div className="w-full h-5/6 flex flex-col  bg-neutral-900 gap-4 pt-4 px-10">
         <div className="flex justify-center flex-col gap-2">
           <span>Progreso: 100%</span>
           <ProgressBar className progress={100} />
         </div>
         <div className="flex flex-col gap-2 ">
           <div className="flex gap-2 items-center">
-            <Plus />
+            <CirclePlus size={20} />
             <span className="hover:cursor-pointer hover:underline">
               Añadir Tarea
             </span>
           </div>
-        </div>
-        <div className="flex justify-between px-10">
-          <span>Nombre de la tarea</span>
-          <span className="pr-20">Prioridad</span>
         </div>
         <SubTask taskName="🗣 Hablar con Juan Perez" />
         <SubTask taskName="📙 Corregir el proyecto" />

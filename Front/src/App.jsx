@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <div className="w-full h-screen flex bg-neutral-600">
+      <div className="w-full h-screen flex bg-neutral-900">
         <div className="w-1/6 h-screen">
           <SidePanel />
         </div>
