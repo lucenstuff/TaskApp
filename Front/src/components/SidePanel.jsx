@@ -1,8 +1,24 @@
 import { Search, LogOut, EllipsisVertical, CirclePlus } from "lucide-react";
-import Button from "./ui/Button";
-import SideBarTask from "./ui/SideBarTask";
+import PageService from "../services/PageService";
+import SideBarPage from "./ui/SideBarPage";
+import { useEffect, useState } from "react";
 
 function SidePanel() {
+  const [pages, setPages] = useState(null);
+
+  useEffect(() => {
+    const fetchPages = async () => {
+      try {
+        const fetchedPages = await PageService.getPages();
+        setPages(fetchedPages);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPages();
+  }, []);
+
   return (
     <div className="flex flex-col h-screen bg-neutral-800 text-neutral-200 px-6 py-6 drop-shadow-xl">
       <div className="flex justify-between items-start">
@@ -29,10 +45,15 @@ function SidePanel() {
         </div>
       </div>
       <div className="w-full bg-neutral-600 h-0.5 my-6"></div>
-      <SideBarTask taskName="🤝 Reunión de equipo" progress={100} />
-      <SideBarTask taskName="📊 Informe mensual" progress={75} />
-      <SideBarTask taskName="🔍 Investigación de mercado" progress={30} />
-      <SideBarTask taskName="📋 Preparación de presentación" progress={90} />
+      {pages &&
+        pages.map((page) => (
+          <SideBarPage
+            key={page.id}
+            pageId={page.id}
+            name={page.name}
+            progress={page.progress}
+          />
+        ))}
       <div className="w-full bg-neutral-600 h-0.5 my-2"></div>
       <div className="flex-grow"></div>
       <div className="flex justify-center pb-6"></div>

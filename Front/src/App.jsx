@@ -1,10 +1,7 @@
-import { useState } from "react";
 import SidePanel from "./components/SidePanel";
-import MainPanel from "./components/MainPanel";
+import MainPanel from "./pages/MainPanel";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <div className="w-full h-screen flex bg-neutral-900">
