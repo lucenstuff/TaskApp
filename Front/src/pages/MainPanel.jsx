@@ -1,4 +1,4 @@
-import { CirclePlus, Ellipsis } from "lucide-react";
+import { CirclePlus } from "lucide-react";
 import ProgressBar from "../components/ui/ProgressBar";
 import PageService from "../services/PageService";
 import { useState, useEffect } from "react";
@@ -22,7 +22,7 @@ function MainPanel() {
 
   return (
     <div className="w-full h-screen text-neutral-200">
-      <PageHader name={selectedPage?.name} />
+      <PageHader color={selectedPage?.color} name={selectedPage?.name} />
       <div className="w-full h-5/6 flex flex-col  bg-neutral-900 gap-4 pt-4 px-10">
         <div className="flex justify-center flex-col gap-2">
           <span>Progreso:{selectedPage?.progress}%</span>
@@ -46,7 +46,7 @@ function MainPanel() {
             />
           ))
         ) : (
-          <div>Loading tasks...</div>
+          <div>Cargando tareas...</div>
         )}
       </div>
     </div>

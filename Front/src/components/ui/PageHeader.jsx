@@ -1,40 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Ellipsis } from "lucide-react";
 import ColorPicker from "./ColorPicker";
-import { EditText } from "react-edit-text";
-import "react-edit-text/dist/index.css";
+import PageService from "../../services/PageService";
 
-function PageHader({ name }) {
+function PageHeader({ color, name }) {
   const [showColorPicker, setShowColorPicker] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [localColor, setLocalColor] = useState(color);
 
-  const handleNameChange = (event) => {
-    setIsEditableName(event.target.value);
+  const pageId = 1;
+
+  useEffect(() => {
+    setLocalColor(color);
+  }, [color]);
+
+  const handleColorChange = (newColor) => {
+    PageService.updateColor(pageId, newColor)
+      .then(() => {
+        setLocalColor(newColor);
+      })
+      .catch((error) => {
+        console.error("Error updating color:", error);
+      });
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleSaveClick = () => {
-    setIsEditing(false);
+  const handleCloseColorPicker = () => {
+    setShowColorPicker(false);
   };
 
   return (
-    <div className="w-full bg-indigo-400 h-20 flex items-center px-10 justify-between gap-4">
+    <div
+      className={`bg-${localColor} w-full h-20 flex items-center px-10 justify-between gap-4`}
+    >
       <div className="flex items-center gap-4 text-2xl">
-        <EditText value={name} onChange={handleNameChange} />
+        <span>{name}</span>
       </div>
       <button onClick={() => setShowColorPicker(!showColorPicker)}>
         <Ellipsis />
       </button>
       {showColorPicker && (
         <div className="absolute right-10 top-12">
-          <ColorPicker />
+          <ColorPicker
+            onColorChange={handleColorChange}
+            onClose={handleCloseColorPicker}
+          />
         </div>
       )}
     </div>
   );
 }
 
-export default PageHader;
+export default PageHeader;

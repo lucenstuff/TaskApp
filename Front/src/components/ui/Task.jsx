@@ -34,8 +34,10 @@ function Task({ id, taskName, isDone }) {
           <div className={done ? "line-through" : ""}>{taskName}</div>
         </div>
         <div className="flex justify-center items-center gap-2">
-          <PrioritySelector />
-          <EllipsisVertical className="hover:cursor-pointer hover:transform hover:scale-105" />
+          <PrioritySelector priority={4} />
+          <button>
+            <EllipsisVertical className="hover:cursor-pointer hover:transform hover:scale-105" />
+          </button>
         </div>
       </div>
       <div className="w-full bg-neutral-200 h-0.5 my-2"></div>

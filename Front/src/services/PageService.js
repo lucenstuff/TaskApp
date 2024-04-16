@@ -34,6 +34,18 @@ class PageService {
         throw error;
       });
   }
+
+  updateColor(pageId, updatedColor) {
+    return this.api
+      .put(`/pages/${pageId}`, { color: updatedColor })
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.error("Error updating task:", error);
+        throw error;
+      });
+  }
 }
 
 export default new PageService();

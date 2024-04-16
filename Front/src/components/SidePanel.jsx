@@ -1,4 +1,4 @@
-import { Search, LogOut, EllipsisVertical, CirclePlus } from "lucide-react";
+import { Search, EllipsisVertical, CirclePlus } from "lucide-react";
 import PageService from "../services/PageService";
 import SideBarPage from "./ui/SideBarPage";
 import { useEffect, useState } from "react";
