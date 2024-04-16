@@ -1,16 +1,24 @@
 import { useState, useEffect } from "react";
 import { EllipsisVertical } from "lucide-react";
 import PrioritySelector from "./PrioritySelector";
+import TaskService from "../../services/TaskService";
 
-function Task({ taskName, isDone }) {
-  const [completed, setCompleted] = useState(isDone);
+function Task({ id, taskName, isDone }) {
+  const [done, setDone] = useState(isDone);
 
   useEffect(() => {
-    setCompleted(isDone);
+    setDone(isDone);
   }, [isDone]);
 
-  const toggleCompleted = () => {
-    setCompleted(!completed);
+  const toggleCompleted = async () => {
+    setDone(!done);
+
+    try {
+      await TaskService.updateDoneTask(id, !done);
+    } catch (error) {
+      console.error("Error updating task:", error);
+      setDone(done);
+    }
   };
 
   return (
@@ -19,11 +27,11 @@ function Task({ taskName, isDone }) {
         <div className="flex items-center gap-4">
           <input
             type="checkbox"
-            checked={completed}
+            checked={done}
             onChange={toggleCompleted}
             className="form-checkbox h-4 w-4 text-neutral-200"
           />
-          <div className={completed ? "line-through" : ""}>{taskName}</div>
+          <div className={done ? "line-through" : ""}>{taskName}</div>
         </div>
         <div className="flex justify-center items-center gap-2">
           <PrioritySelector />

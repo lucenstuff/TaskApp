@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -64,6 +65,32 @@ public class TaskController {
             existingTask.setPage(taskDetails.getPage());
             Task updatedTask = taskRepository.save(existingTask);
             updatePageProgress(updatedTask.getPage());
+            return ResponseEntity.ok(updatedTask);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Task> patchTask(@PathVariable(value = "id") Long taskId,
+                                          @RequestBody Map<String, Object> updates) {
+        return taskRepository.findById(taskId).map(existingTask -> {
+            updates.forEach((key, value) -> {
+                switch (key) {
+                    case "name":
+                        existingTask.setName((String) value);
+                        break;
+                    case "done":
+                        existingTask.setDone((Boolean) value);
+                        break;
+                    case "priority":
+                        existingTask.setPriority((Integer) value);
+                        break;
+                }
+            });
+            Task updatedTask = taskRepository.save(existingTask);
+            if (updates.containsKey("isDone")) {
+                updatePageProgress(updatedTask.getPage());
+            }
             return ResponseEntity.ok(updatedTask);
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }

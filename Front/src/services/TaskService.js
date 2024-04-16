@@ -17,15 +17,11 @@ class TaskService {
 
   updateDoneTask(taskId, newCompletedStatus) {
     try {
+      const payload = { done: newCompletedStatus };
+
       return this.api
-        .put(`/tasks/${taskId}`, { completed: newCompletedStatus })
-        .then((response) => {
-          return response.data;
-        })
-        .catch((error) => {
-          console.error("Error updating task:", error);
-          throw error;
-        });
+        .patch(`/tasks/${taskId}`, payload)
+        .then((res) => res.data);
     } catch (error) {
       console.error("Error updating task:", error);
       throw error;
