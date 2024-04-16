@@ -41,6 +41,7 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping
     public List<Task> getAllTasks() {
         return (List<Task>) taskRepository.findAll();

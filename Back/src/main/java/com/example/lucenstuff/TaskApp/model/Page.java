@@ -22,8 +22,6 @@ public class Page {
     public Page() {
     }
 
-
-
     public Page(Long id, String name, int progress) {
         this.id = id;
         this.name = name;

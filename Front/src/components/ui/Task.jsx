@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EllipsisVertical } from "lucide-react";
 import PrioritySelector from "./PrioritySelector";
 
-function Task({ taskName }) {
-  const [completed, setCompleted] = useState(false);
+function Task({ taskName, isDone }) {
+  const [completed, setCompleted] = useState(isDone);
+
+  useEffect(() => {
+    setCompleted(isDone);
+  }, [isDone]);
 
   const toggleCompleted = () => {
     setCompleted(!completed);

@@ -36,14 +36,18 @@ function MainPanel() {
             </span>
           </div>
         </div>
-        {selectedPage?.tasks.map((subtask) => (
-          <Task
-            key={subtask.id}
-            taskId={subtask.id}
-            taskName={subtask.name}
-            isDone={subtask.isDone}
-          />
-        ))}
+        {selectedPage?.tasks ? (
+          selectedPage.tasks.map((task) => (
+            <Task
+              key={task.id}
+              taskName={task.name}
+              isDone={task.done}
+              id={task.id}
+            />
+          ))
+        ) : (
+          <div>Loading tasks...</div>
+        )}
       </div>
     </div>
   );

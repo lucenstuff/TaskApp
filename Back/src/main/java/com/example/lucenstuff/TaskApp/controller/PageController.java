@@ -36,15 +36,18 @@ public class PageController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Page> updatePage(@PathVariable(value = "id") Long pageId,
-                                           @RequestBody Page pageDetails) {
-        return pageRepository.findById(pageId).map(existingPage -> {
-            existingPage.setName(pageDetails.getName());
-            existingPage.setProgress(pageDetails.getProgress());
-            existingPage.setTasks(pageDetails.getTasks());
-            Page updatedPage = pageRepository.save(existingPage);
-            return ResponseEntity.ok(updatedPage);
-        }).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+            @RequestBody Page pageDetails) {
+                return pageRepository.findById(pageId).map(existingPage -> {
+                    if (pageDetails.getName() != null) {
+                        existingPage.setName(pageDetails.getName());
+                    }
+                    if (pageDetails.getColor() != null) {
+                        existingPage.setColor(pageDetails.getColor());
+                    }
+                    Page updatedPage = pageRepository.save(existingPage);
+                    return ResponseEntity.ok(updatedPage);
+                }).orElseGet(() -> ResponseEntity.notFound().build());
+            }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePage(@PathVariable(value = "id") Long pageId) {
