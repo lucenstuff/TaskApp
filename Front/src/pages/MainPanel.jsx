@@ -7,18 +7,31 @@ import PageHader from "../components/ui/PageHeader";
 
 function MainPanel() {
   const [selectedPage, setSelectedPage] = useState(null);
+  const [tasksUpdated, setTasksUpdated] = useState(false);
+
+  const fetchSelectedPage = async () => {
+    try {
+      const fetchedSelectedPage = await PageService.getPagebyId(1);
+      setSelectedPage(fetchedSelectedPage);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchSelectedPage = async () => {
-      try {
-        const fetchedSelectedPage = await PageService.getPagebyId(1);
-        setSelectedPage(fetchedSelectedPage);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     fetchSelectedPage();
   }, []);
+
+  useEffect(() => {
+    if (tasksUpdated) {
+      fetchSelectedPage();
+      setTasksUpdated(false);
+    }
+  }, [tasksUpdated]);
+
+  const handleTaskUpdate = () => {
+    setTasksUpdated(true);
+  };
 
   return (
     <div className="w-full h-screen text-neutral-200">
@@ -44,6 +57,7 @@ function MainPanel() {
               isDone={task.done}
               id={task.id}
               priority={task.priority}
+              onTaskUpdate={handleTaskUpdate}
             />
           ))
         ) : (

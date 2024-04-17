@@ -3,7 +3,7 @@ import { EllipsisVertical } from "lucide-react";
 import PrioritySelector from "./PrioritySelector";
 import TaskService from "../../services/TaskService";
 
-function Task({ id, taskName, isDone, priority }) {
+function Task({ id, taskName, isDone, priority, onTaskUpdate }) {
   const [done, setDone] = useState(isDone);
   const [selectedPriority, setSelectedPriority] = useState(priority);
 
@@ -16,6 +16,7 @@ function Task({ id, taskName, isDone, priority }) {
 
     try {
       await TaskService.updateDoneTask(id, !done);
+      onTaskUpdate();
     } catch (error) {
       console.error("Error updating task:", error);
       setDone(done);
@@ -26,6 +27,7 @@ function Task({ id, taskName, isDone, priority }) {
     try {
       await TaskService.updatePriority(id, newPriority);
       setSelectedPriority(newPriority);
+      onTaskUpdate();
     } catch (error) {
       console.error("Error updating task priority:", error);
       setSelectedPriority(priority);
