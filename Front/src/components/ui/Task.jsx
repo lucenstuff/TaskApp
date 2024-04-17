@@ -3,8 +3,9 @@ import { EllipsisVertical } from "lucide-react";
 import PrioritySelector from "./PrioritySelector";
 import TaskService from "../../services/TaskService";
 
-function Task({ id, taskName, isDone }) {
+function Task({ id, taskName, isDone, priority }) {
   const [done, setDone] = useState(isDone);
+  const [selectedPriority, setSelectedPriority] = useState(priority);
 
   useEffect(() => {
     setDone(isDone);
@@ -21,6 +22,16 @@ function Task({ id, taskName, isDone }) {
     }
   };
 
+  const handlePriorityChange = async (newPriority) => {
+    try {
+      await TaskService.updatePriority(id, newPriority);
+      setSelectedPriority(newPriority);
+    } catch (error) {
+      console.error("Error updating task priority:", error);
+      setSelectedPriority(priority);
+    }
+  };
+
   return (
     <>
       <div className="flex items-center gap-6 text-neutral-200 text-md justify-between">
@@ -34,7 +45,10 @@ function Task({ id, taskName, isDone }) {
           <div className={done ? "line-through" : ""}>{taskName}</div>
         </div>
         <div className="flex justify-center items-center gap-2">
-          <PrioritySelector priority={4} />
+          <PrioritySelector
+            priority={selectedPriority}
+            onPriorityChange={handlePriorityChange}
+          />
           <button>
             <EllipsisVertical className="hover:cursor-pointer hover:transform hover:scale-105" />
           </button>

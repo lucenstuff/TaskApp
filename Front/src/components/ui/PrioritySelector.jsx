@@ -1,26 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function PrioritySelector() {
-  const [selectedPriority, setSelectedPriority] = useState("Baja");
+function PrioritySelector({ priority, onPriorityChange }) {
+  const [selectedPriority, setSelectedPriority] = useState(priority);
 
   const handlePriorityChange = (event) => {
+    const newPriority = parseInt(event.target.value);
     setSelectedPriority(event.target.value);
+    onPriorityChange(newPriority);
   };
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case "Urgente":
-        return "bg-red-400";
-      case "Alta":
-        return "bg-orange-400";
-      case "Media":
-        return "bg-blue-400";
-      case "Baja":
+      case 1:
         return "bg-green-500";
+      case 2:
+        return "bg-blue-400";
+      case 3:
+        return "bg-orange-400";
+      case 4:
+        return "bg-red-400";
       default:
         return "";
     }
   };
+
+  useEffect(() => {
+    setSelectedPriority(priority);
+  }, [priority]);
 
   return (
     <div className="flex items-center ">
@@ -29,17 +35,17 @@ function PrioritySelector() {
         className={`rounded-md p-1 ${getPriorityColor(selectedPriority)}`}
         onChange={handlePriorityChange}
       >
-        <option className="bg-red-400" value="Urgente">
-          Urgente
+        <option className="bg-green-500" value={1}>
+          Baja
         </option>
-        <option className="bg-orange-300" value="Alta">
-          Alta
-        </option>
-        <option className="bg-blue-400" value="Media">
+        <option className="bg-blue-400" value={2}>
           Media
         </option>
-        <option className="bg-green-500" value="Baja">
-          Baja
+        <option className="bg-orange-300" value={3}>
+          Alta
+        </option>
+        <option className="bg-red-400" value={4}>
+          Urgente
         </option>
       </select>
     </div>

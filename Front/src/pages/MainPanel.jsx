@@ -43,6 +43,7 @@ function MainPanel() {
               taskName={task.name}
               isDone={task.done}
               id={task.id}
+              priority={task.priority}
             />
           ))
         ) : (

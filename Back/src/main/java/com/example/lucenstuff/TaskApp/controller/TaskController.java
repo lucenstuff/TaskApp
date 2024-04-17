@@ -74,21 +74,26 @@ public class TaskController {
     public ResponseEntity<Task> patchTask(@PathVariable(value = "id") Long taskId,
                                           @RequestBody Map<String, Object> updates) {
         return taskRepository.findById(taskId).map(existingTask -> {
-            updates.forEach((key, value) -> {
+            boolean progressShouldUpdate = false;
+            for (Map.Entry<String, Object> update : updates.entrySet()) {
+                String key = update.getKey();
+                Object value = update.getValue();
                 switch (key) {
                     case "name":
                         existingTask.setName((String) value);
                         break;
                     case "done":
                         existingTask.setDone((Boolean) value);
+                        progressShouldUpdate = true;
                         break;
                     case "priority":
                         existingTask.setPriority((Integer) value);
+                        progressShouldUpdate = true;
                         break;
                 }
-            });
+            }
             Task updatedTask = taskRepository.save(existingTask);
-            if (updates.containsKey("isDone")) {
+            if (progressShouldUpdate) {
                 updatePageProgress(updatedTask.getPage());
             }
             return ResponseEntity.ok(updatedTask);
@@ -99,6 +104,7 @@ public class TaskController {
     public ResponseEntity<?> deleteTask(@PathVariable(value = "id") Long taskId) {
         return taskRepository.findById(taskId).map(task -> {
             taskRepository.delete(task);
+            updatePageProgress(task.getPage());
             return ResponseEntity.ok().build();
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }

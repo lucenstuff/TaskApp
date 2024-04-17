@@ -12,8 +12,7 @@ public class Page {
     private Long id;
     private String name;
     private int progress;
-
-    private String color;
+    private String color = "sky-400";
 
     @OneToMany(mappedBy = "page", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("page")
