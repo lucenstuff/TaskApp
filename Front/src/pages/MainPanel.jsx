@@ -6,15 +6,19 @@ import Task from "../components/ui/Task";
 import PageHader from "../components/ui/PageHeader";
 import Button from "../components/ui/Button";
 import TaskModal from "../components/TaskModal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MainPanel() {
   const [taskModalOpen, setTaskModalOpen] = useState(false);
   const [selectedPage, setSelectedPage] = useState(null);
   const [tasksUpdated, setTasksUpdated] = useState(false);
 
+  const pageId = 1;
+
   const fetchSelectedPage = async () => {
     try {
-      const fetchedSelectedPage = await PageService.getPagebyId(1);
+      const fetchedSelectedPage = await PageService.getPagebyId(pageId);
       setSelectedPage(fetchedSelectedPage);
     } catch (error) {
       console.error(error);
@@ -47,8 +51,14 @@ function MainPanel() {
   return (
     <div className="w-full h-screen text-neutral-200">
       {taskModalOpen ? (
-        <div className="fixed inset-0 bg-neutral-950 bg-opacity-40 flex justify-center items-center">
-          <TaskModal onCloseModal={handleCloseModal} />
+        <div className="fixed inset-0 z-10 bg-neutral-950 bg-opacity-40 flex justify-center items-center">
+          <TaskModal
+            pageId={pageId}
+            onCloseModal={() => {
+              handleCloseModal();
+              handleTaskUpdate();
+            }}
+          />
         </div>
       ) : null}
       <PageHader color={selectedPage?.color} name={selectedPage?.name} />
@@ -57,26 +67,28 @@ function MainPanel() {
           <span>Progreso:{selectedPage?.progress}%</span>
           <ProgressBar className progress={selectedPage?.progress} />
         </div>
-        <div className="flex gap-2 w-40">
+        <div className="w-36">
           <Button onClick={handleOpenTaskModal}>
             <CirclePlus size={20} />
             Añadir Tarea
           </Button>
         </div>
-        {selectedPage?.tasks ? (
-          selectedPage.tasks.map((task) => (
-            <Task
-              key={task.id}
-              taskName={task.name}
-              isDone={task.done}
-              id={task.id}
-              priority={task.priority}
-              onTaskUpdate={handleTaskUpdate}
-            />
-          ))
-        ) : (
-          <div>Cargando tareas...</div>
-        )}
+        <div className="flex flex-col gap-4 overflow-auto">
+          {selectedPage?.tasks ? (
+            selectedPage.tasks.map((task) => (
+              <Task
+                key={task.id}
+                taskName={task.name}
+                isDone={task.done}
+                id={task.id}
+                priority={task.priority}
+                onTaskUpdate={handleTaskUpdate}
+              />
+            ))
+          ) : (
+            <div>Cargando tareas...</div>
+          )}
+        </div>
       </div>
     </div>
   );

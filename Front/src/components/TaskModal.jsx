@@ -2,12 +2,31 @@ import { useState } from "react";
 // import PrioritySelector from "./ui/PrioritySelector";
 import Button from "./ui/Button";
 import { X } from "lucide-react";
+import TaskService from "../services/TaskService";
 
-export default function TaskModal({ onCloseModal }) {
+export default function TaskModal({ onCloseModal, pageId, onToast }) {
   const [task, setTask] = useState("");
 
   const handleCloseModal = () => {
     onCloseModal();
+  };
+
+  const handleAddTask = async () => {
+    try {
+      const newTask = {
+        name: task,
+        done: false,
+        priority: 1,
+        page: {
+          id: pageId,
+        },
+      };
+      await TaskService.addTask(newTask);
+      onToast("Tarea añadida");
+      onCloseModal();
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
   };
 
   const handleContainerClick = (event) => {
@@ -41,8 +60,9 @@ export default function TaskModal({ onCloseModal }) {
             className="border-2 border-neutral-400 rounded-md px-2 py-1 focus:ring-0 text-neutral-950"
             placeholder="Ingrese una nueva tarea"
           />
-          {/* <PrioritySelector className={"h-10 drop-shadow-lg"} /> */}
-          <Button variant="create">Añadir Tarea</Button>
+          <Button onClick={handleAddTask} variant="create">
+            Añadir Tarea
+          </Button>
         </form>
       </div>
     </div>

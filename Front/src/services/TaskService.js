@@ -7,20 +7,13 @@ class TaskService {
     });
   }
 
-  getTasks() {
+  async addTask(task) {
     try {
-      return this.api.get("/tasks/{id}").then((res) => res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  addTask(task) {
-    try {
-      return this.api.post("/tasks", task).then((res) => res.data);
+      const response = await this.api.post("/tasks", task);
+      return response.data;
     } catch (error) {
       console.error("Error adding task:", error);
-      throw error;
+      throw new Error("Failed to add task. Please try again later.");
     }
   }
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { EllipsisVertical } from "lucide-react";
+import { Trash } from "lucide-react";
 import PrioritySelector from "./PrioritySelector";
 import TaskService from "../../services/TaskService";
 
@@ -52,7 +52,7 @@ function Task({ id, taskName, isDone, priority, onTaskUpdate }) {
             onPriorityChange={handlePriorityChange}
           />
           <button>
-            <EllipsisVertical className="hover:cursor-pointer hover:transform hover:scale-105" />
+            <Trash className="hover:cursor-pointer hover:transform hover:scale-105" />
           </button>
         </div>
       </div>

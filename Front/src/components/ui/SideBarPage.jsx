@@ -6,7 +6,6 @@ function SideBarPage({ name, progress }) {
   const [currentProgress, setCurrentProgress] = useState(progress);
 
   useEffect(() => {
-    console.log("Progress prop changed:", progress);
     setCurrentProgress(progress);
   }, [progress]);
 

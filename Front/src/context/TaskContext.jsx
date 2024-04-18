@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import TaskService from "../services/TaskService";
 
 const TaskContext = createContext();
@@ -37,18 +37,6 @@ export const TaskProvider = ({ children }) => {
       console.error("Error updating task priority:", error);
     }
   };
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const fetchedTasks = await TaskService.getTasks();
-        setTasks(fetchedTasks);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchTasks();
-  });
 
   return (
     <TaskContext.Provider
