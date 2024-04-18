@@ -9,7 +9,7 @@ public class Task {
     private Long id;
     private String name;
     private boolean isDone;
-    private int priority;
+    private int priority = 1;
 
     public Task() {
     }

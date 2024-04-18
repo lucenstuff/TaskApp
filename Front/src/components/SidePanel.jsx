@@ -20,7 +20,7 @@ function SidePanel() {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen bg-neutral-800 text-neutral-200 px-6 py-6 drop-shadow-xl">
+    <div className="flex flex-col h-screen w-64 bg-neutral-800 text-neutral-200 px-6 py-6 drop-shadow-xl">
       <div className="flex justify-between items-start">
         <div className="flex items-end gap-4 mb-6">
           <img

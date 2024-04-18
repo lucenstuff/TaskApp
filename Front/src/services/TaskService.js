@@ -15,6 +15,15 @@ class TaskService {
     }
   }
 
+  addTask(task) {
+    try {
+      return this.api.post("/tasks", task).then((res) => res.data);
+    } catch (error) {
+      console.error("Error adding task:", error);
+      throw error;
+    }
+  }
+
   updateDoneTask(taskId, newCompletedStatus) {
     try {
       const payload = { done: newCompletedStatus };

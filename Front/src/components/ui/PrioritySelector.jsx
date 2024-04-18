@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function PrioritySelector({ priority, onPriorityChange }) {
+function PrioritySelector({ priority, onPriorityChange, className }) {
   const [selectedPriority, setSelectedPriority] = useState(priority);
 
   const handlePriorityChange = (event) => {
@@ -20,7 +20,7 @@ function PrioritySelector({ priority, onPriorityChange }) {
       case 4:
         return "bg-red-400";
       default:
-        return "";
+        return "bg-green-500";
     }
   };
 
@@ -32,7 +32,9 @@ function PrioritySelector({ priority, onPriorityChange }) {
     <div className="flex items-center ">
       <select
         value={selectedPriority}
-        className={`rounded-md p-1 ${getPriorityColor(selectedPriority)}`}
+        className={`rounded-md p-1 ${getPriorityColor(
+          selectedPriority
+        )} ${className}`}
         onChange={handlePriorityChange}
       >
         <option className="bg-green-500" value={1}>

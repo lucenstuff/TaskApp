@@ -4,8 +4,11 @@ import PageService from "../services/PageService";
 import { useState, useEffect } from "react";
 import Task from "../components/ui/Task";
 import PageHader from "../components/ui/PageHeader";
+import Button from "../components/ui/Button";
+import TaskModal from "../components/TaskModal";
 
 function MainPanel() {
+  const [taskModalOpen, setTaskModalOpen] = useState(false);
   const [selectedPage, setSelectedPage] = useState(null);
   const [tasksUpdated, setTasksUpdated] = useState(false);
 
@@ -16,6 +19,14 @@ function MainPanel() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleOpenTaskModal = () => {
+    setTaskModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setTaskModalOpen(false);
   };
 
   useEffect(() => {
@@ -35,19 +46,22 @@ function MainPanel() {
 
   return (
     <div className="w-full h-screen text-neutral-200">
+      {taskModalOpen ? (
+        <div className="fixed inset-0 bg-neutral-950 bg-opacity-40 flex justify-center items-center">
+          <TaskModal onCloseModal={handleCloseModal} />
+        </div>
+      ) : null}
       <PageHader color={selectedPage?.color} name={selectedPage?.name} />
       <div className="w-full h-5/6 flex flex-col  bg-neutral-900 gap-4 pt-4 px-10">
         <div className="flex justify-center flex-col gap-2">
           <span>Progreso:{selectedPage?.progress}%</span>
           <ProgressBar className progress={selectedPage?.progress} />
         </div>
-        <div className="flex flex-col gap-2 ">
-          <div className="flex gap-2 items-center">
+        <div className="flex gap-2 w-40">
+          <Button onClick={handleOpenTaskModal}>
             <CirclePlus size={20} />
-            <span className="hover:cursor-pointer hover:underline">
-              Añadir Tarea
-            </span>
-          </div>
+            Añadir Tarea
+          </Button>
         </div>
         {selectedPage?.tasks ? (
           selectedPage.tasks.map((task) => (

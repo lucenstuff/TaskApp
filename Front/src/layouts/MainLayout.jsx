@@ -8,12 +8,10 @@ const MainLayout = () => {
     <PageProvider>
       <TaskProvider>
         <div className="w-full h-screen flex bg-neutral-900">
-          <div className="w-1/6 h-screen">
+          <div className="w-64">
             <SidePanel />
           </div>
-          <div className="w-5/6">
-            <MainPanel />
-          </div>
+          <MainPanel className="flex-grow" />
         </div>
       </TaskProvider>
     </PageProvider>

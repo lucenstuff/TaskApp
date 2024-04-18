@@ -2,6 +2,8 @@ const buttonVariants = {
   primary:
     "bg-neutral-700 hover:bg-blue-700 text-neutral-200 text-sm hover:bg-neutral-600 focus:ring-2 focus:ring-neutral-500 focus:ring-opacity-50 drop-shadow-md",
   secondary: "bg-gray-500 hover:bg-gray-700 text-black",
+  create:
+    "bg-green-500 hover:bg-blue-700 text-neutral-200 text-sm hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 drop-shadow-md",
 };
 
 function Button({ children, variant, ...props }) {
